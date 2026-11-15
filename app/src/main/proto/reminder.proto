@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "koharubiyori.starlight.store.proto";
+option java_multiple_files = true;
+
+message ReminderStoreData {
+  int32 media_codec_decoder_renderer_crash_count = 1;
+  bool performance_overlay_collapsed = 2;
+  bool edge_drawer_swipe_hint_shown = 3;
+}

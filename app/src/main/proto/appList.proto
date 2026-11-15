@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "koharubiyori.starlight.screen.appList.util";
+option java_multiple_files = true;
+
+message AppList {
+  repeated App apps = 1;
+
+  message App {
+    string name = 1;
+    int32 id = 2;
+    bool hdrSupported = 3;
+  }
+}

@@ -1,0 +1,238 @@
+<resources>
+    <!-- Word -->
+    <string name="app_name">Starlight</string>
+    <string name="cancel">Cancel</string>
+    <string name="notice">Notice</string>
+    <string name="ok">OK</string>
+    <string name="select">Select</string>
+    <string name="offline">Offline</string>
+    <string name="scanning">Scanning</string>
+    <string name="pairing">Pairing</string>
+    <string name="unpairing">Unpairing</string>
+    <string name="loading">Loading</string>
+    <string name="rename">Rename</string>
+    <string name="unpair">Unpair</string>
+    <string name="wake">Wake</string>
+    <string name="pair">Pair</string>
+    <string name="woke">Woke</string>
+    <string name="settings">Settings</string>
+    <string name="_native">Native</string>
+    <string name="opacity">Opacity</string>
+    <string name="auto">Auto</string>
+    <string name="creating">Crating</string>
+    <string name="touch">Touch</string>
+    <string name="trackpad">Trackpad</string>
+    <string name="shutdown">Shutdown</string>
+
+    <!-- Words(names are equal with their contents or translations) -->
+    <string name="invalid_format">Invalid Format</string>
+    <string name="no_data">No Data</string>
+    <string name="no_computers">No Computers</string>
+    <string name="wrong_pin">Wrong PIN</string>
+    <string name="pairing_failed">Pairing Failed</string>
+    <string name="paired_successfully">Pairing successfully</string>
+    <string name="unpaired_successfully">Unpaired successfully</string>
+    <string name="unpair_fail">Failed to unpair</string>
+    <string name="unpair_error">Device was not paired</string>
+    <string name="app_list">App List</string>
+    <string name="stop_app">Stop App</string>
+    <string name="hide_app">Hide App</string>
+    <string name="create_shortcut">Create Shortcut</string>
+    <string name="computer_offline">Computer Offline</string>
+    <string name="basic_settings">Basic Settings</string>
+    <string name="video_resolution">Video Resolution</string>
+    <string name="native_resolution_warning">Native Resolution Warning</string>
+    <string name="video_frame_rate">Video Frame Rate</string>
+    <string name="video_bitrate">Video Bitrate</string>
+    <string name="s_custom_bitrate">Custom bitrate</string>
+    <string name="video_frame_pacing">Video Frame Pacing</string>
+    <string name="gamepad_settings">Gamepad Settings</string>
+    <string name="audio_settings">Audio Settings</string>
+    <string name="input_settings">Input Settings</string>
+    <string name="change_opacity">Change Opacity</string>
+    <string name="ui_settings">UI Settings</string>
+    <string name="host_settings">Host Settings</string>
+    <string name="advanced_settings">Advanced Settings</string>
+    <string name="connection_error">Connection Error</string>
+    <string name="connection_terminated">Connection Terminated</string>
+    <string name="failed_to_load">Failed to load</string>
+    <string name="go_to_settings">Go to settings</string>
+    <string name="created_shortcut_successfully">Created shortcut successfully</string>
+    <string name="no_apps">No Apps</string>
+    <string name="quickly_settings">Quickly Settings</string>
+    <string name="virtual_controller">Virtual Controller</string>
+    <string name="show_desktop">Show Desktop</string>
+    <string name="pause_streaming">Pause streaming</string>
+    <string name="function_keys">Function Keys</string>
+    <string name="keyboard_button">Keyboard Button</string>
+
+    <!-- Sentences(names begin with 's') -->
+    <string name="s_required_field">This filed cannot be empty</string>
+    <string name="s_offline_computer">Computer is offline</string>
+    <string name="s_entered_pin_btn">I\'ve entered</string>
+    <string name="s_enter_pairing_pin_msg">Please enter the following PIN on the target PC:</string>
+    <string name="s_pairing_in_progress">Pairing already in progress</string>
+    <string name="s_error_unknown_host">Failed to resolve host</string>
+    <string name="error_unknown_host">Failed to resolve host</string>
+    <string name="error_404">
+        GFE returned an HTTP 404 error. Make sure your PC is running a supported GPU.
+        Using remote desktop software can also cause this error. Try rebooting your machine or reinstalling GFE.
+    </string>
+    <string name="error_xml_parse">Failed to parse the computer response</string>
+    <string name="error_io">I/O error while communicating with the computer</string>
+    <string name="s_error_404">
+        GFE returned an HTTP 404 error. Make sure your PC is running a supported GPU.
+        Using remote desktop software can also cause this error. Try rebooting your machine
+    </string>
+    <string name="s_video_decoder_init_failed">Video decoder failed to initialize. Your device may not support the selected resolution or frame rate.</string>
+    <string name="s_conn_error_msg">Failed to start</string>
+    <string name="s_check_ports_msg">Check your firewall and port forwarding rules for port(s):</string>
+    <string name="s_nettest_text_blocked">Your device\'s current network connection is blocking Moonlight. Streaming over the Internet may not work while connected to this network.</string>
+    <string name="s_no_video_received_error">No video received from host.</string>
+    <string name="s_no_frame_received_error">Your network connection isn\'t performing well. Reduce your video bitrate setting or try a faster connection.</string>
+    <string name="s_early_termination_error">Something went wrong on your host PC when starting the stream.\n\nMake sure you don\'t have any DRM-protected content open on your host PC. You can also try restarting your host PC.</string>
+    <string name="s_frame_conversion_error">The host PC reported a fatal video encoding error.\n\nTry disabling HDR mode, changing the streaming resolution, or changing your host PC\'s display resolution.</string>
+    <string name="s_conn_terminated_msg">The connection was terminated.</string>
+    <string name="s_error_code_prefix">Error code:</string>
+    <string name="s_failed_paring_for_computer_in_game">Computer is currently in a game. You must close the game before pairing.</string>
+    <string name="s_wol_no_mac">Unable to wake PC because there is no stored MAC address</string>
+    <string name="s_sunshine_not_running">Sunshine is not running in target computer</string>
+    <string name="s_video_resolution_desc">Increase to improve image clarity. Decrease for better performance on lower end devices and slower networks.</string>
+    <string name="s_native_resolution_warning_content">Native resolution and/or FPS may not be supported by the streaming server. You will probably need to configure a matching custom display mode for the host PC manually.\n\nIf you choose to create a custom resolution in NVIDIA Control Panel to match your screen settings, please ensure you have read and understood NVIDIA\'s warning regarding possible monitor damage, PC instability, and other potential problems.\n\nWe are not responsible for any problems resulting from creating a custom resolution on your PC.\n\nIt may be that your monitor does not support a necessary display configuration. If so, you may try to set up a virtual monitor. Finally, if your device or host PC does not support streaming at a specific resolution or refresh rate, you\'re out of luck unfortunately.</string>
+    <string name="s_video_frame_rate_desc">Increase for a smoother video stream. Decrease for better performance on lower end devices.</string>
+    <string name="s_video_bitrate_desc">Increase for better image quality. Decrease to improve performance on slower connections</string>
+    <string name="s_auto_bitrate_desc">When this option is kept closed, the appropriate bitrate will be automatically calculated.</string>
+    <string name="s_stretch_video_full_screen">Stretch video to full-screen</string>
+    <string name="s_native_full_screen">Native Full-Screen</string>
+    <string name="s_video_frame_pacing_desc">Specify how to balance video latency and smoothness</string>
+    <string name="s_pacing_latency">Prefer lowest latency</string>
+    <string name="s_pacing_balanced">Balanced</string>
+    <string name="s_pacing_balanced_alt">Balanced with FPS limit</string>
+    <string name="s_pacing_smoothness">Prefer smoothest video (may significantly increase latency)</string>
+
+    <string name="s_surround_sound_config">Surround Sound Configuration</string>
+    <string name="s_surround_sound_config_desc">Enable 5.1 or 7.1 surround sound for home-theater systems</string>
+    <string name="s_surround_sound_config_stereo">Stereo</string>
+    <string name="s_surround_sound_config_51surround">5.1 Surround Sound</string>
+    <string name="s_surround_sound_config_71surround">7.1 Surround Sound</string>
+    <string name="s_enable_system_equalizer">Enable system equalizer support</string>
+    <string name="s_enable_system_equalizer_desc">Allows audio effects to function while streaming, but may increase audio latency</string>
+
+
+    <string name="s_multi_controller">Automatic gamepad presence detection</string>
+    <string name="s_multi_controller_desc">Unchecking this option forces a gamepad to always be present</string>
+    <string name="s_vibrate_fallback">Emulate rumble support with vibration</string>
+    <string name="s_vibrate_fallback_desc">Vibrates your device to emulate rumble if your gamepad does not support it</string>
+    <string name="s_vibrate_fallback_strength">Adjust emulated rumble intensity</string>
+    <string name="s_vibrate_fallback_strength_desc">Amplify or reduce the vibration intensity on your device</string>
+    <string name="s_adjust_deadzone">Adjust analog stick deadzone</string>
+    <string name="s_adjust_deadzone_desc">Note: Some games can enforce a larger deadzone than what Starlight is configured to use.</string>
+    <string name="s_xbox_driver">Xbox 360/One USB gamepad driver</string>
+    <string name="s_xbox_driver_desc">Enables a built-in USB driver for devices without native Xbox controller support</string>
+    <string name="s_usb_bind_all">Override native Xbox gamepad support</string>
+    <string name="s_usb_bind_all_desc">Use Starlight\'s USB driver for all supported gamepads, even if native Xbox controller support is present</string>
+    <string name="s_mouse_emulation">Mouse emulation via gamepad</string>
+    <string name="s_mouse_emulation_desc">Long pressing the Start button will switch the gamepad into mouse mode</string>
+    <string name="s_flip_face_buttons">Flip face buttons</string>
+    <string name="s_flip_face_buttons_desc">Switches the face buttons A/B and X/Y for gamepads and the on-screen controls</string>
+    <string name="s_touchpad_as_mouse">Always control mouse with touchpad</string>
+    <string name="s_touchpad_as_mouse_desc">Forces gamepad touchpad input to control the host mouse, even when emulating a gamepad with a touchpad.</string>
+    <string name="s_motion_sensors">Allow use of gamepad motion sensors</string>
+    <string name="s_motion_sensors_desc">Enables supported hosts to request motion sensor data when emulating a gamepad with motion sensors. Disabling may slightly reduce power and network usage if motion sensors are not being used in game.</string>
+    <string name="s_motion_fallback">Emulate gamepad motion sensor support</string>
+    <string name="s_motion_fallback_desc">Uses your device\'s built-in motion sensors if gamepad sensors are not supported by your connected gamepad or your Android version.\nNote: Enabling this option may cause your gamepad to appear as a PlayStation controller on the host.</string>
+    <string name="s_analog_scrolling">Use an analog stick to scroll</string>
+    <string name="s_analog_scrolling_desc">Select an analog stick to scroll when in mouse emulation mode</string>
+    <string name="s_analog_scroll_none">None (both sticks move the mouse)</string>
+    <string name="s_analog_scroll_right">Right analog stick</string>
+    <string name="s_analog_scroll_left">Left analog stick</string>
+
+    <string name="s_touchscreen_trackpad">Use the touchscreen as a trackpad</string>
+    <string name="s_touchscreen_trackpad_desc">If enabled, the touchscreen acts like a trackpad. If disabled, the touchscreen directly controls the mouse cursor.</string>
+    <string name="s_mouse_nav_buttons">Enable back and forward mouse buttons</string>
+    <string name="s_mouse_nav_buttons_desc">Enabling this option may break right clicking on some buggy devices</string>
+    <string name="s_absolute_mouse_mode">Remote desktop mouse mode</string>
+    <string name="s_absolute_mouse_mode_desc">This can make mouse acceleration behave more naturally for remote desktop usage, but it is incompatible with many games.</string>
+
+    <string name="s_on_screen_controls_settings">On-screen Controls Settings</string>
+    <string name="s_show_onscreen_controls">Show on-screen controls</string>
+    <string name="s_show_onscreen_controls_desc">Show virtual controller overlay on touchscreen</string>
+    <string name="s_vibrate_osc">Enable vibration</string>
+    <string name="s_vibrate_osc_desc">Vibrates your device to emulate rumble for the on-screen controls</string>
+    <string name="s_only_l3r3">Only show L3 and R3</string>
+    <string name="s_only_l3r3_desc">Hide all virtual buttons except L3 and R3</string>
+    <string name="s_show_guide_button">Show Guide Button</string>
+    <string name="s_show_guide_button_desc">Show the guide button on screen</string>
+    <string name="s_reset_osc">Clear saved on-screen controls layout</string>
+    <string name="s_reset_osc_desc">Resets all on-screen controls to their default size and position</string>
+    <string name="s_reset_osc_dialog">Are you sure you want to delete your saved on-screen controls layout?</string>
+    <string name="s_reset_osc_success">On-screen controls reset to default</string>
+    <string name="s_osc_opacity">Change opacity of on-screen controls</string>
+    <string name="s_osc_opacity_desc">Make the on-screen controls more/less transparent</string>
+
+    <string name="s_host_audio">Play audio on PC</string>
+    <string name="s_host_audio_desc">Play audio from the computer and this device</string>
+
+    <string name="s_enable_pip">Enable Picture-in-Picture observer mode</string>
+    <string name="s_enable_pip_desc">Allows the stream to be viewed (but not controlled) while multitasking</string>
+    <string name="s_language_list">Language</string>
+    <string name="s_language_list_desc">Language to use for Moonlight</string>
+
+
+    <string name="s_unlock_fps">Unlock all possible frame rates</string>
+    <string name="s_unlock_fps_desc">Streaming at 90 or 120 FPS may reduce latency on high-end devices but can cause lag or instability on devices that can\'t support it</string>
+    <string name="s_reduce_refresh_rate">Allow refresh rate reduction</string>
+    <string name="s_reduce_refresh_rate_desc">Lower display refresh rates can save power at the expense of some additional video latency</string>
+    <string name="s_disable_warnings">Disable warning messages</string>
+    <string name="s_disable_warnings_desc">Disable on-screen connection warning messages while streaming</string>
+    <string name="s_disable_frame_drop">Never drop frames</string>
+    <string name="s_disable_frame_drop_desc">May reduce micro-stuttering on some devices, but can increase latency</string>
+    <string name="s_video_format">Change codec settings</string>
+    <string name="s_video_format_desc">Newer codecs can lower video bandwidth requirements if your device supports them. Codec selections may be ignored if not supported by the host software or GPU.</string>
+    <string name="s_video_format_auto">Automatic (Recommended)</string>
+    <string name="s_video_format_av1_always">Prefer AV1 (Experimental)</string>
+    <string name="s_video_format_hevc_always">Prefer HEVC</string>
+    <string name="s_video_format_h264_always">Prefer H.264</string>
+    <string name="s_enable_hdr">Enable HDR (Experimental)</string>
+    <string name="s_enable_hdr_desc">Stream HDR when the game and PC GPU support it. HDR requires a GPU with HEVC Main 10 encoding support.</string>
+    <string name="s_full_range">Force full range video (Experimental)</string>
+    <string name="s_full_range_desc">This will cause loss of detail in light and dark areas if your device doesn\'t properly display full range video content.</string>
+    <string name="s_enable_perf_overlay">Show performance stats while streaming</string>
+    <string name="s_enable_perf_overlay_desc">Display real-time stream performance information while streaming</string>
+    <string name="s_enable_post_stream_toast">Show latency message after streaming</string>
+    <string name="s_enable_post_stream_toast_desc">Display a latency information message after the stream ends</string>
+    <string name="s_controller_type_changed_toast">Gamepad type may be changed due to motion sensor emulation</string>
+    <string name="s_metered_dialog">Warning: Your active network connection is metered!</string>
+    <string name="s_error_usb_prohibited">USB access is prohibited by your device administrator. Check your Knox or MDM settings.</string>
+    <string name="s_hdr_unsupported">Display does not support HDR10</string>
+    <string name="s_decoder_hdr10_unsupported">Decoder does not support HDR10 profile</string>
+    <string name="s_decoder_hevc_unsupported">No HEVC decoder found</string>
+    <string name="s_decoder_av1_unsupported">No AV1 decoder found</string>
+    <string name="s_decoder_h264_unsupported">This device or ROM doesn\'t support hardware accelerated H.264 playback.</string>
+    <string name="s_failed_to_create_shortcut">Failed to create shortcut. You may not have the required permissions, or your launcher or OS may not support this feature.</string>
+    <string name="s_press_back_again_to_exit">Press back again to exit</string>
+    <string name="s_shutdown_confirmation">Are you sure you want to shutdown the computer?</string>
+
+    <string name="s_conn_client_latency">Average frame decoding latency:</string>
+    <string name="s_conn_client_latency_hw">hardware decoder latency:</string>
+    <string name="s_conn_hardware_latency">Average hardware decoding latency:</string>
+    <string name="s_drawer_swipe_hint">Swipe from the left edge</string>
+    <string name="s_meter_network_warn">Warning: Your active network connection is metered!</string>
+
+    <!-- Format strings -->
+    <string name="f_frame_rate">%1$dFPS</string>
+    <string name="f_check_to_unpair_computer">Are you sure you want to unpair %1$s?</string>
+    <string name="f_perf_overlay_streamdetails">Video stream: %1$s %2$.2f FPS</string>
+    <string name="f_perf_overlay_decoder">Decoder: %1$s</string>
+    <string name="f_perf_overlay_incomingfps">Incoming frame rate from network: %1$.2f FPS</string>
+    <string name="f_perf_overlay_renderingfps">Rendering frame rate: %1$.2f FPS</string>
+    <string name="f_perf_overlay_hostprocessinglatency">Host processing latency min/max/average: %1$.1f/%2$.1f/%3$.1f ms</string>
+    <string name="f_perf_overlay_netdrops">Frames dropped by your network connection: %1$.2f%%</string>
+    <string name="f_perf_overlay_netlatency">Average network latency: %1$d ms (variance: %2$d ms)</string>
+    <string name="f_perf_overlay_dectime">Average decoding time: %1$.2f ms</string>
+    <string name="f_starting_app">Starting: %1$s</string>
+    <string name="f_successfully_quit_app">Successfully quit %1$s</string>
+    <string name="f_failed_to_quit_app">Failed to quit %1$s</string>
+    <string name="f_failed_to_load_app_info">Failed to load app information. Make sure Sunshine is running and that %1$s is listed on the host computer.</string>
+    <string name="f_stop_current_app_and_start">The current app %1$s is running. Are you sure you want to stop it and start %2$s?</string>
+</resources>

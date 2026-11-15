@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_package = "koharubiyori.starlight.store.proto";
+option java_multiple_files = true;
+
+message PairedComputerStoreData {
+  repeated ComputerDetails computers = 1;
+
+  message ComputerDetails {
+    string name = 1;
+    string uuid = 2;
+    optional string mac = 3;
+    optional bytes server_cert = 4;
+    Addresses addresses = 5;
+
+    // ComputerDetailsEx fields
+    optional string alias = 6;
+
+    message Addresses {
+      optional AddressTuple local = 1;
+      optional AddressTuple remote = 2;
+      optional AddressTuple manual = 3;
+      optional AddressTuple ipv6 = 4;
+
+      message AddressTuple {
+        string host = 1;
+        int32 port = 2;
+      }
+    }
+  }
+}
+
+

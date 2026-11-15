@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+option java_package = "koharubiyori.starlight.store.proto";
+option java_multiple_files = true;
+
+message SettingsStoreData {
+  optional int32 width = 1;
+  optional int32 height = 2;
+  optional int32 fps = 3;
+  optional bool custom_bitrate = 42;
+  optional Bitrates bitrates = 43;
+
+  optional FormatOption video_format = 5;
+
+  optional int32 deadzone_percentage = 6;
+  optional int32 osc_opacity = 7;
+
+  optional bool stretch_video = 8;
+  optional bool enable_sops = 9;
+  optional bool play_host_audio = 10;
+  optional bool disable_warnings = 11;
+
+  optional bool small_icon_mode = 12;
+  optional bool multi_controller = 13;
+  optional bool usb_driver = 14;
+  optional bool flip_face_buttons = 15;
+
+  optional bool onscreen_controller = 16;
+  optional bool only_l3_r3 = 17;
+  optional bool show_guide_button = 18;
+  optional bool enable_hdr = 19;
+  optional bool enable_pip = 20;
+
+  optional bool enable_perf_overlay = 21;
+  optional bool enable_latency_toast = 22;
+  optional bool bind_all_usb = 23;
+  optional bool mouse_emulation = 24;
+
+  optional AnalogStickForScrolling analog_stick_for_scrolling = 25;
+
+  optional bool mouse_nav_buttons = 26;
+  optional bool unlock_fps = 27;
+
+  optional bool vibrate_osc = 28;
+  optional bool vibrate_fallback_to_device = 29;
+  optional int32 vibrate_fallback_to_device_strength = 30;
+
+  optional bool touchscreen_trackpad = 31;
+
+  optional AudioConfiguration audio_configuration = 32;
+
+  optional FramePacing frame_pacing = 33;
+  optional bool absolute_mouse_mode = 34;
+  optional bool enable_audio_fx = 35;
+  optional bool reduce_refresh_rate = 36;
+  optional bool full_range = 37;
+
+  optional bool gamepad_motion_sensors = 38;
+  optional bool gamepad_touchpad_as_mouse = 39;
+  optional bool gamepad_motion_sensors_fallback_to_device = 40;
+
+  optional string language = 41;
+
+  message Bitrates {
+    optional int32 p720 = 1;
+    optional int32 p1080 = 2;
+    optional int32 p1440 = 3;
+    optional int32 p4k = 4;
+    optional int32 native = 5;
+  }
+}
+
+enum FramePacing {
+  MIN_LATENCY = 0;
+  BALANCED = 1;
+  CAP_FPS = 2;
+  MAX_SMOOTHNESS = 3;
+}
+
+enum FormatOption {
+  AUTO = 0;
+  AV1 = 1;
+  HEVC = 2;
+  H264 = 3;
+}
+
+enum AnalogStickForScrolling {
+  NONE = 0;
+  RIGHT = 1;
+  LEFT = 2;
+}
+
+enum AudioConfiguration {
+  STEREO = 0;
+  SURROUND_51 = 1;
+  SURROUND_71 = 2;
+}
+
