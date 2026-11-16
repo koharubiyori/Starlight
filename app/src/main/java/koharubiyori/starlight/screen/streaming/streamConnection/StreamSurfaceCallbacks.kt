@@ -20,56 +20,17 @@ import timber.log.Timber
 import kotlin.reflect.KMutableProperty0
 
 class StreamSurfaceCallbacks(
-  private val activity: Activity,
-  private val streamView: StreamView,
-  private val settingsStoreData: SettingsStoreData,
-  private val desiredRefreshRate: Float,
-  private val mayReduceRefreshRate: Boolean,
-  private val decoderRenderer: MediaCodecDecoderRenderer,
-  private val nvConnection: NvConnection,
-  private val statusFlow: MutableStateFlow<StreamConnection.Status>,
-  private val notificationFlow: MutableSharedFlow<String>,
-  private val coroutineScope: CoroutineScope,
-  private val controllerHandler: ControllerHandler,
-  private val errorMessage: KMutableProperty0<StreamConnection.ErrorMessage?>,
-  private val updatePipAutoEnter: () -> Unit,
-  private val stopConnection: () -> Unit,
+  private val onCreated: () -> Unit,
+  private val onReady: () -> Unit,
+  private val onDestroyed: () -> Unit,
 ) : SurfaceHolder.Callback {
   private var surfaceCreated = false
   private var attemptedConnection = false
 
   override fun surfaceCreated(holder: SurfaceHolder) {
     Timber.i("Surface created")
-    runBlocking {
-      surfaceCreated = true
-
-      // Android will pick the lowest matching refresh rate for a given frame rate value, so we want
-      // to report the true FPS value if refresh rate reduction is enabled. We also report the true
-      // FPS value if there's no suitable matching refresh rate. In that case, Android could try to
-      // select a lower refresh rate that avoids uneven pull-down (ex: 30 Hz for a 60 FPS stream on
-      // a display that maxes out at 50 Hz).
-      val desiredFrameRate =
-        if (mayReduceRefreshRate || desiredRefreshRate < settingsStoreData.fps) {
-          settingsStoreData.fps.toFloat()
-        } else {
-          // Otherwise, we will pretend that our frame rate matches the refresh rate we picked in
-          // prepareDisplayForRendering(). This will usually be the highest refresh rate that our
-          // frame rate evenly divides into, which ensures the lowest possible display latency.
-          desiredRefreshRate
-        }
-
-      // Tell the OS about our frame rate to allow it to adapt the display refresh rate appropriately
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        // We want to change frame rate even if it's not seamless, since prepareDisplayForRendering()
-        // will not set the display mode on S+ if it only differs by the refresh rate. It depends
-        // on us to trigger the frame rate switch here.
-        holder.surface.setFrameRate(
-          desiredFrameRate,
-          Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE,
-          Surface.CHANGE_FRAME_RATE_ALWAYS
-        )
-      }
-    }
+    surfaceCreated = true
+    onCreated()
   }
 
   override fun surfaceChanged(
@@ -79,29 +40,10 @@ class StreamSurfaceCallbacks(
     height: Int
   ) {
     Timber.i("Surface changed")
-    runBlocking {
-      check(surfaceCreated) { "Surface changed before creation!" }
-      if (!attemptedConnection) {
-        attemptedConnection = true
-
-        decoderRenderer.setRenderTarget(holder)
-        nvConnection.start(
-          AndroidAudioRenderer(activity.applicationContext, settingsStoreData.enableAudioFx),
-          decoderRenderer,
-          StreamConnectionListener(
-            activity = activity,
-            streamView = streamView,
-            coroutineScope = coroutineScope,
-            controllerHandler = controllerHandler,
-            decoderRenderer = decoderRenderer,
-            statusFlow = statusFlow,
-            notificationFlow = notificationFlow,
-            errorMessage = errorMessage,
-            updatePipAutoEnter = updatePipAutoEnter,
-            stopConnection = stopConnection,
-          )
-        )
-      }
+    check(surfaceCreated) { "Surface changed before creation!" }
+    if (!attemptedConnection) {
+      attemptedConnection = true
+      onReady()
     }
   }
 
@@ -109,15 +51,6 @@ class StreamSurfaceCallbacks(
     Timber.i("Surface destroyed")
     check(surfaceCreated) { "Surface destroyed before creation!" }
 
-    if (attemptedConnection) {
-      // Let the decoder know immediately that the surface is gone
-      decoderRenderer.prepareForStop()
-
-      if (statusFlow.value == StreamConnection.Status.CONNECTED) {
-        globalIoContinueScope.launch {
-          stopConnection()
-        }
-      }
-    }
+    if (attemptedConnection) onDestroyed()
   }
 }

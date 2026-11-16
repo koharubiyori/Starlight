@@ -12,6 +12,7 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Rational
 import android.view.Display
+import android.view.Surface
 import androidx.activity.ComponentActivity
 import androidx.core.app.PictureInPictureParamsCompat
 import androidx.core.content.ContextCompat
@@ -45,20 +46,24 @@ import koharubiyori.starlight.store.proto.FormatOption
 import koharubiyori.starlight.store.proto.FramePacing
 import koharubiyori.starlight.store.proto.ReminderStoreData
 import koharubiyori.starlight.screen.settings.bitrate
+import koharubiyori.starlight.screen.streaming.util.audio.AndroidAudioRenderer
 import koharubiyori.starlight.store.proto.SettingsStoreData
 import koharubiyori.starlight.store.proto.copy
 import koharubiyori.starlight.util.glRenderer
+import koharubiyori.starlight.util.globalIoContinueScope
 import koharubiyori.starlight.util.toast
 import koharubiyori.starlight.util.uniqueId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.concurrent.Executors
 import kotlin.experimental.or
 import kotlin.math.min
 import kotlin.math.roundToInt
+import kotlin.text.compareTo
 
 class StreamConnection(
   val computer: ComputerDetailsEx,
@@ -84,13 +89,14 @@ class StreamConnection(
   val performanceInfoFlow = MutableStateFlow<MediaCodecDecoderRenderer.PerformanceInfo?>(null)
   private var pictureInPicture: BasicPictureInPicture? = null
   private var usbDriverServiceConnection: UsbDriverServiceConnection? = null
-
-  private var suppressPipRefCount = 0
   private val touchContextMap = arrayOfNulls<TouchContext>(2)
   private var desiredRefreshRate = 60f
   var reportedCrash = false
     private set
   var errorMessage: ErrorMessage? = null
+    private set
+
+  var surfaceDestroyed: Boolean = false
     private set
 
 
@@ -296,9 +302,9 @@ class StreamConnection(
     }
 
     if (settingsStoreData.usbDriver) {
-      usbDriverServiceConnection = UsbDriverServiceConnection(controllerHandler).also {
+      usbDriverServiceConnection = UsbDriverServiceConnection(controllerHandler).also { serviceConnection ->
         coroutineScope.launch {
-          it.suppressPipRefCountFlow.collect { updatePipAutoEnter() }
+          serviceConnection.usbPermissionPromptCountFlow.collect { updatePipAutoEnter(serviceConnection.usbPermissionPromptOnScreen) }
         }
       }
 
@@ -337,22 +343,63 @@ class StreamConnection(
     // The connection will be started when the surface gets created
     streamView.holder.addCallback(
       StreamSurfaceCallbacks(
-        activity = activity,
-        streamView = streamView,
-        settingsStoreData = settingsStoreData,
-        desiredRefreshRate = desiredRefreshRate,
-        mayReduceRefreshRate = mayReduceRefreshRate(),
-        decoderRenderer = decoderRenderer,
-        nvConnection = nvConnection,
-        statusFlow = statusFlow,
-        notificationFlow = notificationFlow,
-        coroutineScope = coroutineScope,
-        controllerHandler = controllerHandler,
-        errorMessage = this::errorMessage,
-        updatePipAutoEnter = { updatePipAutoEnter() },
-        stopConnection = { stopConnection() },
+        onCreated = {
+          if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return@StreamSurfaceCallbacks
+          // Android will pick the lowest matching refresh rate for a given frame rate value, so we want
+          // to report the true FPS value if refresh rate reduction is enabled. We also report the true
+          // FPS value if there's no suitable matching refresh rate. In that case, Android could try to
+          // select a lower refresh rate that avoids uneven pull-down (ex: 30 Hz for a 60 FPS stream on
+          // a display that maxes out at 50 Hz).
+          val desiredFrameRate =
+            if (mayReduceRefreshRate() || desiredRefreshRate < settingsStoreData.fps) {
+              settingsStoreData.fps.toFloat()
+            } else {
+              // Otherwise, we will pretend that our frame rate matches the refresh rate we picked in
+              // prepareDisplayForRendering(). This will usually be the highest refresh rate that our
+              // frame rate evenly divides into, which ensures the lowest possible display latency.
+              desiredRefreshRate
+            }
+
+          streamView.holder.surface.setFrameRate(
+            desiredFrameRate,
+            Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE,
+            Surface.CHANGE_FRAME_RATE_ALWAYS
+          )
+        },
+        onReady = {
+          runBlocking {
+            decoderRenderer.setRenderTarget(streamView.holder)
+            nvConnection.start(
+              AndroidAudioRenderer(activity.applicationContext, settingsStoreData.enableAudioFx),
+              decoderRenderer,
+              StreamConnectionListener(
+                activity = activity,
+                streamView = streamView,
+                coroutineScope = coroutineScope,
+                controllerHandler = controllerHandler,
+                decoderRenderer = decoderRenderer,
+                statusFlow = statusFlow,
+                notificationFlow = notificationFlow,
+                errorMessage = ::errorMessage,
+                updatePipAutoEnter = ::updatePipAutoEnter,
+                stopConnection = ::stopConnection,
+              )
+            )
+          }
+        },
+        onDestroyed = {
+          // Let the decoder know immediately that the surface is gone
+          surfaceDestroyed = true
+          decoderRenderer.prepareForStop()
+          if (statusFlow.value == Status.CONNECTED) {
+            globalIoContinueScope.launch {
+              stopConnection()
+            }
+          }
+        }
       )
     )
+
     statusFlow.value = Status.INITIALIZED
   }
 
@@ -526,9 +573,9 @@ class StreamConnection(
     }
   }
 
-  fun updatePipAutoEnter() {
+  fun updatePipAutoEnter(usbPermissionPromptOnScreen: Boolean = usbDriverServiceConnection?.usbPermissionPromptOnScreen ?: false) {
     if (!settingsStoreData.enablePip) return
-    val autoEnter = statusFlow.value == Status.CONNECTED && suppressPipRefCount == 0
+    val autoEnter = statusFlow.value == Status.CONNECTED && !usbPermissionPromptOnScreen
     pictureInPicture!!.setPictureInPictureParams(getPictureInPictureParams(streamView, autoEnter))
   }
 

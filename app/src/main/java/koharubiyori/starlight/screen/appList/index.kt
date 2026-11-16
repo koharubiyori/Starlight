@@ -157,7 +157,6 @@ fun AppListScreen(entryKey: AppListEntryKey) {
         )
       }
     ) {
-      debugPrint(it.calculateTopPadding(), it.calculateRightPadding(LayoutDirection.Ltr))
       Box(
         modifier = Modifier
           .padding(it)

@@ -279,6 +279,10 @@ public class UsbDriverService extends Service implements UsbDriverListener {
   }
 
   public static boolean shouldClaimDevice(UsbDevice device, boolean claimAllAvailable) {
+//    Timber.i("Is XBoxOneController: %s", ((!kernelSupportsXboxOne() || !isRecognizedInputDevice(device) || claimAllAvailable) && XboxOneController.canClaimDevice(device)));
+//    Timber.i("Is XBox360Controller: %s", ((!isRecognizedInputDevice(device) || claimAllAvailable) && Xbox360Controller.canClaimDevice(device)));
+//    Timber.i("Is XBox360WirelessDongle: %s", ((!kernelSupportsXbox360W() || claimAllAvailable) && Xbox360WirelessDongle.canClaimDevice(device)));
+
     return ((!kernelSupportsXboxOne() || !isRecognizedInputDevice(device) || claimAllAvailable) && XboxOneController.canClaimDevice(device)) ||
         ((!isRecognizedInputDevice(device) || claimAllAvailable) && Xbox360Controller.canClaimDevice(device)) ||
         // We must not call isRecognizedInputDevice() because wireless controllers don't share the same product ID as the dongle

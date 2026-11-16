@@ -168,7 +168,6 @@ fun StreamingScreen(entryKey: StreamingEntryKey) {
   }
 
   val settingsDrawerRef = remember { Ref<EdgeModalDrawerRef>() }
-  var hasResumedOnce = remember { InitRef(false) }
 
   OneTimeLaunchedEffect (Unit) {
     if (NetworkUtil.isUsingMobileData(context)) {
@@ -266,10 +265,8 @@ fun StreamingScreen(entryKey: StreamingEntryKey) {
   // SurfaceView(StreamView) will be re-created if app resumed, but composes AndroidView will not,
   // so we need to force re-create it by changing the key
   LifecycleResumeEffect(Unit) {
-    if (hasResumedOnce.value) {
+    if (streamConnection?.surfaceDestroyed != true) {
       streamViewUpdateKey++
-    } else {
-      hasResumedOnce.value = true
     }
     onPauseOrDispose { }
   }
